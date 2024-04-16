@@ -3,6 +3,7 @@ const app = express();
 const client = require('./db/client.js');
 const { getActivities, getSingleActivity, createActivities, deleteActivity } = require('./db/activities.js');
 const { getRoutines, getSingleRoutine, createRoutines, deleteRoutine } = require('./db/routines.js');
+const { getRoutinesActivities, createRoutinesActivites } = require('./db/routines_activities.js');
 
 client.connect();
 
@@ -89,4 +90,23 @@ app.delete('/api/v1/routines/delete/:routineId', async (req, res, next) => {
 	}
 });
 
-app.listen(3001, (req, res) => console.log('LISTENING ON PORT 3001'));
+// ROUTINES_ACTIVITES ROUTES
+app.get('/api/v1/routines_activities', async (req, res, next) => {
+	try{
+		const Routines_activity = await getRoutinesActivities();
+		res.send(Routines_activity);
+	}catch (error){
+		next(error)
+	}
+});
+
+app.post('/api/v1/routines_activities/create', async (req, res, next) => {
+	try{
+		const newRoutinesActivities = await createRoutinesActivites(req.body);
+		res.send(newRoutinesActivities)
+	}catch (error) {
+		next(error);
+	}
+	console.log('ROUTINE CREATED SUCESSFULLY')
+});
+app.listen(3002, (req, res) => console.log('LISTENING ON PORT 3002'));

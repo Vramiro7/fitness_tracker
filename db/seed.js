@@ -67,10 +67,10 @@ const syncAndSeed = async () => {
 	const pulls = await createRoutines({is_public: true, routineName: 'pull_kicks', description:'Nothing but pulls'});
 	const hell = await createRoutines({is_public: false, routineName:'hell_day', description:'all workouts'});
 
-	await createRoutinesActivites(sideKicks.id, kicks.id, 3);
-	await createRoutinesActivites(roundKicks.id, kicks.id, 5);
-	await createRoutinesActivites(pullRound.id, pulls.id, 6);
-	await createRoutinesActivites(pullSide.id, pulls.id, 9);
+	await createRoutinesActivites({activity_id:`${sideKicks.id}`, routines_id: `${kicks.id}`, count: 3});
+	await createRoutinesActivites({activity_id:`${roundKicks.id}`, routines_id:`${kicks.id}`, count: 5});
+	await createRoutinesActivites({activity_id:`${pullRound.id}`, routines_id:`${pulls.id}`, count: 6});
+	await createRoutinesActivites({activity_id:`${pullSide.id}`, routines_id:`${pulls.id}`, count: 9});
 	
 	await client.end();
 	console.log('CONNECTION ENDED');
